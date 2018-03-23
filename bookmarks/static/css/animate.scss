@@ -1,0 +1,100 @@
+.simple-fade-enter-active {
+  transition: all 1s;
+}
+.simple-fade-leave-active {
+  //transition: all 1s;
+  //transition: opacity .01s;
+}
+.simple-fade-enter, .simple-fade-leave-to {
+  opacity: 0;
+  //height: 0;
+}
+
+.fade-enter-active {
+  transition: all 1s;
+  transition-delay: 1s;
+  -webkit-transition-delay: 1s;
+}
+.fade-leave-active {
+  transition: all 1s;
+  //transition: all 1s;
+  //transition: opacity .01s;
+}
+.fade-enter, .fade-leave-to{
+  opacity: 0;
+  filter: blur(5px);
+  //height: 0;
+}
+
+.popup-enter-active {
+  animation: over-popup 1s;
+}
+.popup-leave-active {
+  transition: 1s;
+  transform: translateY(300px);
+}
+.popup-enter, .popup-leave-to {
+  position: fixed;
+  transform: translateY(300px);
+}
+
+@keyframes over-popup {
+  0% {
+    transform: translateY(300px);
+  }
+  80% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.popleft-enter-active {
+  animation: over-popLeft 2s;
+}
+.popleft-leave-active {
+  transition: 2s;
+  //transform: translateX(700px);
+}
+.popleft-enter, .popleft-leave-to {
+  position: fixed;
+  transform: translateX(-700px);
+}
+
+@keyframes over-popLeft {
+  0% {
+    transform: translateX(-700px);
+  }
+  90% {
+    transform: translateX(20px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes title {
+  0% {
+    text-shadow: 0 0 5px rgba(200, 200, 200, 0.6);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(200, 200, 200, 0.4);
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(200, 200, 200, 0.6);
+  }
+}
+
+.list-item {
+  display: block;
+  margin-right: 10px;
+}
+.list-enter-active, .list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to
+  /* .list-leave-active for below version 2.1.8 */ {
+  opacity: 0;
+  filter: blur(10px);
+}

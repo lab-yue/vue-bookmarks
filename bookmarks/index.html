@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="static/js/vue.min.js"></script>
+<link href="static/css/style.css" rel="stylesheet">
+<script src="static/js/TweenMax.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>书签</title>
+</head>
+<body>
+<div id="main">
+
+    <div>
+        <h1>Bookmarks</h1>
+    </div>
+    <transition name="simple-fade" mode="in-out">
+        <img v-if="changeView" src="static/img/trash.png" class="delete-all" @click="deleteAll">
+    </transition>
+
+    <transition name="simple-fade" mode="in-out">
+        <div v-if="changeView && (showBooks.length !== 8)" id="button-list">
+            <button class="cute-button" @click="showAddBook">+ New Book</button>
+        </div>
+    </transition>
+
+    <div id="book-list" class="book-list">
+        <transition-group name="list" tag="div">
+            <book v-for="book,id in showBooks"
+                  v-if="(selectedBookNo === null) || (id === selectedBookNo)"
+                  :key="id"
+                  :class="['book-'+id,'common',{forceLeft:id === selectedBookNo}]"
+                  @open="hideOtherBooks"
+                  @close="showOtherBooks"
+                  v-bind:book-data="book"
+                  v-bind:book-id="id">
+        </transition-group>
+        </book>
+    </div>
+    <transition name="fade">
+        <div v-if="!changeView" class="back text-left">
+            <button @click="closeByButton">Back</button>
+        </div>
+    </transition>
+
+    <transition name="popup">
+        <div v-if="!changeView" class="page-updater text-left">
+            <p v-if="ErrorMsg" class="update Error"> {{ErrorMsg}}</p>
+            <p><span>Update page to:</span>
+                <input class="cute-input" v-model="inputNum" @keyup.enter="checkNum">
+                <button class="cute-button" @click="checkNum">Confirm</button>
+            </p>
+        </div>
+    </transition>
+
+    <modal v-if="showModal" @close="closeAddBook" @pure-close="pureCloseAddBook"></modal>
+</div>
+</body>
+
+<script type="text/x-template" id="modal-template">
+    <transition name="modal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <p>
+                        <span>Book Title:</span>
+                        <input class="cute-input" v-model="bookTitle">
+                    </p>
+                    <p>
+                        <span>Book Now Page:</span>
+                        <input class="cute-input" v-model="bookNowPage">
+                    </p>
+                    <p>
+                        <span>Book Total Page:</span>
+                        <input class="cute-input" v-model="bookTotalPage">
+                    </p>
+                    <p v-if="ErrorMsg" class="Error">{{ErrorMsg}}</p>
+                    <div class="text-right">
+                        <span style="width: 100%">
+                            <button class="modal-default-button" @click="cancel">
+                                Cancel
+                            </button>
+
+                            <button class="modal-default-button" @click="close">
+                                OK
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </transition>
+</script>
+
+<script type="text/x-template" id="book-template">
+
+    <div :class="['book-object']">
+        <div class="cover turn" @click="toggleOpen">
+            <p class="book-title"><strong>{{bookData.bookTitle}}</strong></p>
+            <p class="book-percentage">{{percentage}}</p>
+        </div>
+        <div class="page turn">
+            <p class="book-content-1">---------------</p>
+            <p class="book-content-2">---------------</p>
+            <p class="book-content-3">---------------</p>
+            <p class="book-content-4">---------------</p>
+            <p class="book-content-5">---------------</p>
+        </div>
+        <div class="page turn" @click="toggleOpen">
+            <p class="book-content-1">---- ---------</p>
+            <p class="book-content-4">-------- -----</p>
+            <p class="book-content-5">---------- ----</p>
+            <p class="book-content-5">------- -------</p>
+            <p class="book-content-5">---------------</p>
+        </div>
+        <div class="bookmark">
+            <img src="static/img/bookmark.png">
+            <transition name="simple-fade">
+                <div class="bookmark-content" v-if="showBookmarkContent">
+                    <p class="title">Title: {{bookData.bookTitle}}
+                    </p>
+                    <p class="now">Now: Page
+                        <span class="number">{{animatedNumber}} </span>/ {{bookData.bookTotalPage}}
+                    </p>
+                    <p class="start-on">Started on: {{bookData.bookStartReading}}
+                    </p>
+                </div>
+            </transition>
+        </div>
+        <div class="page" @click="toggleOpen" id="lastPage">
+            <p class="book-content-1">---------------</p>
+            <p class="book-content-3">---------------</p>
+            <p class="book-content-5">---------------</p>
+            <p class="book-content-3">-- ---------</p>
+            <p class="book-content-5">---------------</p>
+            <p class="book-page-number">{{bookData.bookNowPage}}</p>
+        </div>
+    </div>
+
+</script>
+<script src="static/js/main.min.js"></script>
+</html>
