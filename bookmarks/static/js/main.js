@@ -1,5 +1,5 @@
-let STORAGE_KEY = 'BOOK-MARKS';
-
+const STORAGE_KEY = 'BOOK-MARKS';
+const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 let myStorage = {
     fetch: function () {
         return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
@@ -80,7 +80,12 @@ Vue.component('book', {
             //console.log(this.isOpen);
             //let selectedPages = this.$el;
             //console.log(selectedPages);
-            let showList = (this.isOpen ? [3, 2, 1, 0] : [0, 1, 2, 3]);
+            let showList = (this.isOpen ? [0, 1, 2, 3] : [3, 2, 1, 0] );;
+            if (isChrome){
+                //showList = (this.isOpen ? [0, 1, 2, 3] : [3, 2, 1, 0] );
+            }else{
+                //showList = (this.isOpen ? [3, 2, 1, 0] : [0, 1, 2, 3]);
+            }
             //let showList = [3, 2, 1, 0];
             let pageList = Array.from(this.$el.getElementsByClassName('turn'));
             pageList.forEach((page, index) => {

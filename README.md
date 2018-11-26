@@ -1,3 +1,3 @@
-##demo: 
+## Live demo: 
 
-####[https://minatsuki-yui.github.io/bookmarks/](https://minatsuki-yui.github.io/bookmarks/)
+#### [https://lab.rainy.me/projects/bookmarks](https://lab.rainy.me/projects/bookmarks)
